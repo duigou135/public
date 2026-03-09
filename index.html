@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>邓瑢 - 春日原野风设计简历</title>
+    
+    <!-- 引入 Swiper.js CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+    <!-- 引入现代无衬线英文字体 Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,800;0,900;1,800&display=swap" rel="stylesheet">
+    <!-- 引入 FontAwesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ================= Spring Fields 春日原野配色卡 ================= */
+        :root {
+            --c1-dark:   #008E6B;  /* 深翠绿 (主文本、强调用色) */
+            --c2-mid:    #46B065;  /* 鲜草绿 (图标、渐变过渡) */
+            --c3-light:  #81C570;  /* 浅草绿 (次级渐变、标签底色) */
+            --c4-pale:   #DCECB5;  /* 嫩芽黄绿 (背景光晕、卡片边框) */
+            --c5-bg:     #FBFFF2;  /* 奶白底色 (全局背景) */
+            
+            --text-main: #008E6B;  /* 全局主文字颜色使用最深的绿色保证阅读体验 */
+            --font-main: 'Poppins', -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+        }
+
+        html, body {
+            height: 100%; margin: 0; padding: 0;
+            background-color: var(--c5-bg);
+            font-family: var(--font-main);
+            color: var(--text-main);
+            overflow: hidden;
+        }
+
+        * { box-sizing: border-box; }
+
+        /* ================= 动态春日呼吸背景 ================= */
+        .bg-container {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0; overflow: hidden; pointer-events: none;
+            background: var(--c5-bg);
+        }
+        /* 柔和的春风流光色块 */
+        .orb {
+            position: absolute; border-radius: 50%;
+            filter: blur(80px); opacity: 0.7;
+            animation: float 15s ease-in-out infinite alternate;
+        }
+        .orb-1 { width: 350px; height: 350px; background: var(--c4-pale); top: -50px; left: -50px; animation-delay: 0s; }
+        .orb-2 { width: 400px; height: 400px; background: var(--c3-light); bottom: -150px; right: -50px; animation-delay: -5s; opacity: 0.4;}
+        .orb-3 { width: 300px; height: 300px; background: var(--c4-pale); top: 30%; right: -100px; animation-delay: -10s; }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, 40px) scale(1.05); }
+            100% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        /* 极细的网格纹理，增加高级感 */
+        .grid-overlay {
+            position: absolute; width: 100%; height: 100%;
+            background-image: radial-gradient(rgba(0, 142, 107, 0.05) 1px, transparent 1px);
+            background-size: 25px 25px; z-index: 1;
+        }
+
+        /* ================= Swiper 设置 ================= */
+        .swiper { width: 100%; height: 100%; z-index: 10; }
+        .swiper-slide {
+            display: flex; flex-direction: column; justify-content: center;
+            padding: 30px 25px; position: relative;
+        }
+
+        /* ================= 毛玻璃质感卡片 ================= */
+        .glass-card {
+            background: rgba(251, 255, 242, 0.65); /* 使用奶白底色作为半透明卡片 */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 12px 35px rgba(0, 142, 107, 0.06); /* 深翠绿的浅色投影 */
+            margin-bottom: 20px;
+        }
+
+        /* ================= 渐变文字与标题 ================= */
+        .page-title {
+            font-size: 28px; font-weight: 900;
+            background: linear-gradient(135deg, var(--c1-dark), var(--c2-mid));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 25px; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        .section-sub {
+            font-size: 16px; font-weight: 800; color: var(--c1-dark);
+            margin-top: 0; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+        }
+        .section-sub i {
+            color: var(--c2-mid);
+            font-size: 18px;
+        }
+
+        /* ================= 元素入场动画 ================= */
+        .anim-element {
+            opacity: 0; transform: translateY(30px) scale(0.98);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .swiper-slide-active .anim-element { opacity: 1; transform: translateY(0) scale(1); }
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+
+        /* ================= 封面专属 ================= */
+        .cover-name {
+            font-size: 68px; font-weight: 900; line-height: 1;
+            background: linear-gradient(135deg, var(--c1-dark), var(--c2-mid));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin: 10px 0 20px 0; text-shadow: 0px 8px 20px rgba(0, 142, 107, 0.15);
+        }
+        .cover-subtitle {
+            font-size: 14px; font-weight: 800; letter-spacing: 4px; color: var(--c2-mid);
+        }
+        
+        /* 春日渐变标签 */
+        .tags-container { display: flex; flex-direction: column; gap: 12px; margin-top: 20px;}
+        .v-tag {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 20px; border-radius: 30px; font-size: 14px; font-weight: 600;
+            color: var(--c5-bg); box-shadow: 0 8px 20px rgba(0, 142, 107, 0.15); width: fit-content;
+        }
+        .tag-1 { background: linear-gradient(135deg, var(--c1-dark), var(--c2-mid)); }
+        .tag-2 { background: linear-gradient(135deg, var(--c2-mid), var(--c3-light)); }
+        .tag-3 { background: linear-gradient(135deg, var(--c3-light), #A3D897); color: var(--c1-dark); } /* 第三个用浅色字深 */
+
+        /* ================= 列表与图标 ================= */
+        .info-list { list-style: none; padding: 0; margin: 0; }
+        .info-list li {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 15px; font-size: 14px; color: var(--c1-dark); font-weight: 600;
+        }
+        .icon-box {
+            width: 34px; height: 34px; border-radius: 10px;
+            background: var(--c4-pale); 
+            display: flex; justify-content: center; align-items: center;
+        }
+        .icon-box i { font-size: 15px; color: var(--c1-dark); }
+        .text-desc { font-size: 13px; line-height: 1.6; color: var(--c1-dark); margin: 0; opacity: 0.9;}
+
+        /* ================= 进度条 ================= */
+        .skill-item { margin-bottom: 15px; }
+        .skill-top { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--c1-dark);}
+        .progress-bg { width: 100%; height: 8px; background: var(--c4-pale); border-radius: 10px; overflow: hidden; }
+        .progress-bar { height: 100%; border-radius: 10px; }
+        .pb-1 { background: linear-gradient(90deg, var(--c3-light), var(--c1-dark)); width: 95%; }
+        .pb-2 { background: linear-gradient(90deg, var(--c2-mid), var(--c1-dark)); width: 85%; }
+        .pb-3 { background: linear-gradient(90deg, var(--c3-light), var(--c2-mid)); width: 95%; }
+
+        /* ================= 课程标签墙 ================= */
+        .pill-wall { display: flex; flex-wrap: wrap; gap: 8px; }
+        .pill { 
+            font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 20px;
+            background: rgba(255,255,255,0.8); border: 1px solid var(--c3-light);
+            color: var(--c1-dark);
+        }
+        .pill:nth-child(even) { background: var(--c4-pale); border-color: transparent; }
+
+        /* ================= 时间线 ================= */
+        .timeline { border-left: 3px solid var(--c4-pale); padding-left: 20px; margin-left: 10px; }
+        .tl-item { margin-bottom: 25px; position: relative; }
+        .tl-item::before {
+            content: ''; position: absolute; left: -29px; top: 0;
+            width: 14px; height: 14px; border-radius: 50%;
+            background: var(--c2-mid); border: 3px solid var(--c5-bg);
+            box-shadow: 0 0 0 2px var(--c4-pale);
+        }
+        .tl-time { font-size: 12px; font-weight: 800; color: var(--c2-mid); margin-bottom: 5px; }
+        .tl-title { font-size: 16px; font-weight: 800; color: var(--c1-dark); margin-bottom: 3px; }
+        .tl-role { font-size: 13px; color: var(--c3-light); font-weight: 700; margin-bottom: 8px; }
+
+        /* ================= 奖项徽章网格 ================= */
+        .badge-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .badge-card {
+            background: rgba(255,255,255,0.6); border-radius: 16px; padding: 15px;
+            text-align: center; border: 1px solid var(--c4-pale);
+        }
+        .badge-icon {
+            width: 42px; height: 42px; border-radius: 50%; margin: 0 auto 10px;
+            display: flex; justify-content: center; align-items: center; font-size: 18px; color: white;
+            background: linear-gradient(135deg, var(--c2-mid), var(--c1-dark));
+            box-shadow: 0 5px 15px rgba(0, 142, 107, 0.2);
+        }
+        .badge-title { font-size: 13px; font-weight: 800; color: var(--c1-dark); line-height: 1.2; margin-bottom: 4px;}
+        .badge-sub { font-size: 11px; font-weight: 600; color: var(--c2-mid); }
+
+        /* ================= 滑动提示 ================= */
+        .swipe-guide {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            width: 44px; height: 44px; border-radius: 50%; background: var(--c5-bg);
+            display: flex; justify-content: center; align-items: center;
+            color: var(--c1-dark); font-size: 20px; z-index: 999;
+            box-shadow: 0 8px 20px rgba(0, 142, 107, 0.15);
+            animation: bounce 1.5s infinite; pointer-events: none;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-10px) translateX(-50%); }
+            60% { transform: translateY(-5px) translateX(-50%); }
+        }
+
+        .swiper-pagination-bullet { background: var(--c3-light); opacity: 0.5; }
+        .swiper-pagination-bullet-active { background: var(--c1-dark) !important; width: 14px; border-radius: 7px; opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <!-- 动态呼吸背景层 -->
+    <div class="bg-container">
+        <div class="grid-overlay"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- 向上滑动提示 -->
+    <div class="swipe-guide"><i class="fas fa-angle-double-down"></i></div>
+
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+
+            <!-- 第1页：封面 -->
+            <div class="swiper-slide">
+                <div class="cover-subtitle anim-element">SPRING FIELDS / RESUME</div>
+                <h1 class="cover-name anim-element delay-1">邓瑢</h1>
+                
+                <div class="tags-container">
+                    <div class="v-tag tag-1 anim-element delay-2"><i class="fas fa-cube"></i> 产品设计</div>
+                    <div class="v-tag tag-2 anim-element delay-3"><i class="fas fa-layer-group"></i> 跨媒介创新</div>
+                    <div class="v-tag tag-3 anim-element delay-4"><i class="fas fa-seedling"></i> 考研预备生</div>
+                </div>
+
+                <!-- 抽象的叶片/波纹几何图形 -->
+                <div class="anim-element delay-4" style="margin-top: 50px;">
+                    <svg width="80" height="60" viewBox="0 0 100 80">
+                        <path d="M10,40 Q50,10 90,40 Q50,70 10,40" fill="var(--c4-pale)" opacity="0.8"/>
+                        <circle cx="50" cy="40" r="15" fill="var(--c2-mid)"/>
+                        <circle cx="50" cy="40" r="6" fill="var(--c5-bg)"/>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- 第2页：个人信息 & 求职意向 -->
+            <div class="swiper-slide">
+                <h2 class="page-title anim-element">Profile.</h2>
+                
+                <div class="glass-card anim-element delay-1">
+                    <h3 class="section-sub"><i class="fas fa-id-card-alt"></i> 基本信息</h3>
+                    <ul class="info-list">
+                        <li><div class="icon-box"><i class="fas fa-phone"></i></div> 18456775507</li>
+                        <li><div class="icon-box"><i class="fas fa-envelope"></i></div> 2842418128@qq.com</li>
+                        <li><div class="icon-box"><i class="fas fa-map-marker-alt"></i></div> 籍贯：安徽合肥 | 现居：重庆</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card anim-element delay-2" style="border-left: 5px solid var(--c2-mid);">
+                    <h3 class="section-sub"><i class="fas fa-paper-plane"></i> 求职意向</h3>
+                    <ul class="info-list">
+                        <li><div class="icon-box"><i class="fas fa-briefcase"></i></div> 岗位：产品设计实习 / UI助理</li>
+                        <li><div class="icon-box"><i class="fas fa-city"></i></div> 期望城市：安徽合肥</li>
+                        <li><div class="icon-box"><i class="fas fa-compass"></i></div> 类型：实习 / 考研准备</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 第3页：教育背景 -->
+            <div class="swiper-slide">
+                <h2 class="page-title anim-element">Education.</h2>
+                
+                <div class="glass-card anim-element delay-1">
+                    <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                        <h3 class="section-sub" style="margin:0;"><i class="fas fa-university"></i> 重庆邮电大学</h3>
+                    </div>
+                    <div style="font-size: 13px; color: var(--c2-mid); font-weight: 800; margin: 5px 0 10px;">2023.09 - 2027.06 (大三在读)</div>
+                    <p class="text-desc" style="font-weight: 700; margin-bottom: 5px;">产品设计专业 | 本科</p>
+                    <p class="text-desc" style="color: var(--c1-dark); font-weight: 900; margin-bottom: 15px;">GPA: 3.4/4.0 | 专业前30%</p>
+                    
+                    <div class="pill-wall">
+                        <span class="pill">产品造型设计</span>
+                        <span class="pill">UX用户体验</span>
+                        <span class="pill">交互设计</span>
+                        <span class="pill">CMF设计</span>
+                        <span class="pill">设计心理学</span>
+                        <span class="pill">犀牛建模</span>
+                    </div>
+                </div>
+
+                <div class="glass-card anim-element delay-2" style="background: linear-gradient(135deg, rgba(251,255,242,0.8), var(--c4-pale));">
+                    <h3 class="section-sub"><i class="fas fa-flag"></i> 考研规划</h3>
+                    <p class="text-desc" style="font-weight: 600;">目标院校为<strong>安徽地区高校产品设计硕士</strong>，目前处于系统备考阶段。期望通过实习验证理论，反哺深造。</p>
+                </div>
+            </div>
+
+            <!-- 第4页：专业技能 -->
+            <div class="swiper-slide">
+                <h2 class="page-title anim-element">Skills.</h2>
+                
+                <div class="glass-card anim-element delay-1">
+                    <h3 class="section-sub"><i class="fas fa-laptop-code"></i> 软件技能</h3>
+                    
+                    <div class="skill-item">
+                        <div class="skill-top"><span>Photoshop / Illustrator</span><span>95%</span></div>
+                        <div class="progress-bg"><div class="progress-bar pb-1"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-top"><span>Rhino 3D / KeyShot</span><span>90%</span></div>
+                        <div class="progress-bg"><div class="progress-bar pb-1" style="width: 90%;"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-top"><span>Figma / Axure (交互)</span><span>85%</span></div>
+                        <div class="progress-bg"><div class="progress-bar pb-2"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-top"><span>MS Office (PPT突出)</span><span>95%</span></div>
+                        <div class="progress-bg"><div class="progress-bar pb-3" style="width: 95%;"></div></div>
+                    </div>
+                </div>
+
+                <div class="glass-card anim-element delay-2">
+                    <h3 class="section-sub"><i class="fas fa-certificate"></i> 语言与认证</h3>
+                    <ul class="info-list" style="font-size: 13px;">
+                        <li><div class="icon-box"><i class="fas fa-language"></i></div> 英语：CET-4通过 / CET-6备考</li>
+                        <li><div class="icon-box"><i class="fas fa-microphone"></i></div> 普通话：二级甲等</li>
+                        <li><div class="icon-box"><i class="fas fa-medal"></i></div> Adobe Certified Professional</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 第5页：核心项目 -->
+            <div class="swiper-slide">
+                <h2 class="page-title anim-element">Projects.</h2>
+                
+                <div class="glass-card anim-element delay-1" style="border-top: 6px solid var(--c1-dark);">
+                    <div style="font-size: 12px; font-weight:800; color: var(--c3-light);">2024.09 — 2024.12</div>
+                    <h3 style="font-size: 20px; font-weight: 900; color: var(--c1-dark); margin: 5px 0;">「颐养」适老化智能药盒</h3>
+                    <div style="font-size: 14px; font-weight:700; color: var(--c2-mid); margin-bottom: 15px;">主设计师 (外观与交互)</div>
+                    
+                    <div class="text-desc" style="font-weight: 500;">
+                        <p style="margin-bottom: 12px;">
+                            <span style="background:var(--c1-dark); color:var(--c5-bg); padding:2px 8px; border-radius:10px; font-size:11px; font-weight:bold;">调研</span><br>
+                            访谈50+老年人构建画像，提炼“忘服药、分不清药”核心痛点。
+                        </p>
+                        <p style="margin-bottom: 12px;">
+                            <span style="background:var(--c2-mid); color:var(--c5-bg); padding:2px 8px; border-radius:10px; font-size:11px; font-weight:bold;">方案</span><br>
+                            Rhino 建模，设计磁吸式药仓与大按键交互；KeyShot 逼真渲染。
+                        </p>
+                        <p style="margin-bottom: 15px;">
+                            <span style="background:var(--c3-light); color:var(--c1-dark); padding:2px 8px; border-radius:10px; font-size:11px; font-weight:bold;">测试</span><br>
+                            制作高保真样机，多轮可用性测试迭代优化。
+                        </p>
+                        
+                        <div style="background: var(--c4-pale); padding: 10px 15px; border-radius: 8px; font-weight: 800; color: var(--c1-dark);">
+                            <i class="fas fa-trophy"></i> 获校级工业设计大赛二等奖
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第6页：实习经历 -->
+            <div class="swiper-slide">
+                <h2 class="page-title anim-element">Experience.</h2>
+                
+                <div class="timeline anim-element delay-1">
+                    <div class="tl-item">
+                        <div class="tl-time">2025.07 — 2025.09 (计划)</div>
+                        <div class="tl-title">重庆工业设计有限公司</div>
+                        <div class="tl-role">产品设计实习生</div>
+                        <div class="text-desc" style="font-weight: 500;">
+                            • 协助完成家电外观改款，PS效果图精修。<br>
+                            • 使用 Figma 参与官网 UI 重塑，独立输出视觉稿。<br>
+                            • 整理物料，参与评审并跟进修改意见。
+                        </div>
+                    </div>
+                    
+                    <div class="tl-item">
+                        <div class="tl-time">校园实践</div>
+                        <div class="tl-title">校学生会宣传部 & 志愿者</div>
+                        <div class="tl-role">视觉设计 / 现场统筹</div>
+                        <div class="text-desc" style="font-weight: 500;">
+                            • 负责校园活动海报与文创设计，累计输出作品 20+ 份。<br>
+                            • 担任「重邮设计周」志愿者，负责布展与视觉引导设计。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第7页：奖项荣誉 -->
+            <div class="swiper-slide">
+                <h2 class="page-title anim-element">Awards.</h2>
+                
+                <div class="badge-grid anim-element delay-1">
+                    <div class="badge-card">
+                        <div class="badge-icon"><i class="fas fa-trophy"></i></div>
+                        <div class="badge-title">二等奖</div>
+                        <div class="badge-sub">工业设计大赛</div>
+                    </div>
+                    <div class="badge-card">
+                        <div class="badge-icon"><i class="fas fa-medal"></i></div>
+                        <div class="badge-title">优秀奖</div>
+                        <div class="badge-sub">大广赛重庆赛区</div>
+                    </div>
+                    <div class="badge-card">
+                        <div class="badge-icon"><i class="fas fa-crown"></i></div>
+                        <div class="badge-title">优秀干部</div>
+                        <div class="badge-sub">校级荣誉称号</div>
+                    </div>
+                    <div class="badge-card">
+                        <div class="badge-icon"><i class="fas fa-heart"></i></div>
+                        <div class="badge-title">三好学生</div>
+                        <div class="badge-sub">校级荣誉称号</div>
+                    </div>
+                </div>
+
+                <div class="glass-card anim-element delay-2" style="margin-top: 20px; padding: 15px 20px;">
+                    <h3 class="section-sub" style="font-size: 14px;"><i class="fas fa-star"></i> 其他证书</h3>
+                    <p class="text-desc" style="font-weight: 600;">大学生创新创业训练计划 校级立项</p>
+                </div>
+            </div>
+
+            <!-- 第8页：自我评价 & 封底 -->
+            <div class="swiper-slide">
+                
+                <div class="anim-element delay-1" style="text-align: center; margin-bottom: 25px;">
+                    <i class="fas fa-quote-left" style="font-size: 30px; color: var(--c3-light);"></i>
+                    <h3 style="font-size: 16px; font-weight: 800; color: var(--c1-dark); margin-top: 15px; line-height: 1.6;">
+                        "在幻变的生命里，<br>设计是平衡理性与感性的桥梁。"
+                    </h3>
+                </div>
+
+                <div class="glass-card anim-element delay-2">
+                    <ul class="info-list" style="font-size: 13px;">
+                        <li style="align-items: flex-start;"><i class="fas fa-check-circle" style="color:var(--c2-mid); margin-top:3px;"></i> <div><strong>基本功扎实：</strong>手绘与软件双修，对造型色彩把控敏锐。</div></li>
+                        <li style="align-items: flex-start;"><i class="fas fa-check-circle" style="color:var(--c2-mid); margin-top:3px;"></i> <div><strong>结构化思维：</strong>强执行力，善于拆解任务（如考研与项目规划）。</div></li>
+                        <li style="align-items: flex-start;"><i class="fas fa-check-circle" style="color:var(--c2-mid); margin-top:3px;"></i> <div><strong>高情商协作：</strong>性格细致，善于沟通并提供正向情绪价值。</div></li>
+                    </ul>
+                </div>
+
+                <div class="anim-element delay-4" style="text-align: center; margin-top: 40px;">
+                    <h2 style="font-size: 26px; font-weight: 900; background: linear-gradient(90deg, var(--c1-dark), var(--c3-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 5px;">THANKS FOR WATCHING</h2>
+                    <p style="font-size: 13px; font-weight: 800; color: var(--c2-mid); letter-spacing: 4px;">期待与您相遇</p>
+                </div>
+            </div>
+
+        </div>
+        <!-- 分页器 -->
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <!-- 引入 Swiper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            direction: "vertical", 
+            slidesPerView: 1,
+            spaceBetween: 0,
+            mousewheel: true,
+            speed: 800,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            on: {
+                slideChange: function () {
+                    var guide = document.querySelector('.swipe-guide');
+                    if (this.isEnd) {
+                        guide.style.display = 'none';
+                    } else {
+                        guide.style.display = 'flex';
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
